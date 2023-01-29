@@ -10,7 +10,10 @@ const News =(props)=>{
   const[page,setPage]=useState(1)
   const[totalResults,setTotalResults]=useState(0)
    
-  const updateNews=async(pageNo)=>{
+ 
+  
+  useEffect(() => { //instead of componentDidMount
+     const updateNews=async(pageNo)=>{
     props.setProgress(10)
     let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${pageNo}&pageSize=${props.pageSize}`;
     let data = await fetch(url);
@@ -22,8 +25,6 @@ const News =(props)=>{
     setTotalResults(parseData.totalResults)
     props.setProgress(100)
   }
-  
-  useEffect(() => { //instead of componentDidMount
     return () => {
       updateNews(page)
     }
